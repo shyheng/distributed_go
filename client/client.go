@@ -2,55 +2,24 @@ package main
 
 import (
 	"context"
-)
-
-import (
-	"dubbo.apache.org/dubbo-go/v3/common/logger"
+	"dubbo.apache.org/dubbo-go/v3/common/logger" // dubbogo 框架日志
 	"dubbo.apache.org/dubbo-go/v3/config"
-	_ "dubbo.apache.org/dubbo-go/v3/imports"
-)
-
-import (
+	_ "dubbo.apache.org/dubbo-go/v3/imports" // dubbogo 框架依赖，所有dubbogo进程都需要隐式引入一次
 	"dubbo3-demo/api"
 )
 
-var greeterProvider = &api.UserProviderClientImpl{}
-
-func init() {
-	// validate consumer greeterProvider ptr
-	config.SetConsumerService(greeterProvider)
-}
-
+// export DUBBO_GO_CONFIG_PATH=dubbogo.yml 运行前需要设置环境变量，指定配置文件位置
 func main() {
-	// init rootConfig with config api
-	rc := config.NewRootConfigBuilder().
-		SetConsumer(config.NewConsumerConfigBuilder().
-			AddReference("UserProviderClientImpl", config.NewReferenceConfigBuilder().
-				SetProtocol("tri").
-				Build()).
-			Build()).
-		AddRegistry("zookeeper", config.NewRegistryConfigWithProtocolDefaultPort("zookeeper")).
-		Build()
-
-	// start dubbo-go framework with configuration
-	if err := config.Load(config.WithRootConfig(rc)); err != nil {
+	// 启动框架
+	if err := config.Load(); err != nil {
 		panic(err)
 	}
-
-	// run rpc invocation
-	testSayHello()
-}
-
-func testSayHello() {
-	ctx := context.Background()
-
-	req := api.HelloRequest{
-		Name: "laurence",
-	}
-	user, err := greeterProvider.SayHello(ctx, &req)
+	//var i int32 = 1
+	// 发起调用
+	//user, err := api.UserProviderClient.GetUser(context.TODO(), i)
+	user, err := api.UserProviderClient.Test(context.TODO(), 2)
 	if err != nil {
 		panic(err)
 	}
-
-	logger.Infof("Receive user = %+v\n", user)
+	logger.Infof("response result: %+v", user.ID)
 }
