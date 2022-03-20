@@ -1,0 +1,16 @@
+dubbo:
+  registries:
+    demoZK: # 定义服务注册发现中心
+      protocol: zookeeper
+      address: 127.0.0.1:2181
+  consumer:
+    references:
+      UserService:
+        protocol: dubbo
+        interface: com.shy.provider.service.UserService
+      UService:
+        protocol: dubbo
+        interface: com.shy.provider.service.UService
+      UserSer:
+        protocol: dubbo
+        interface: com.shy.provider.service.UserSer
