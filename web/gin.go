@@ -21,7 +21,7 @@ func ShyRoute(engine *gin.Engine) {
 	{
 		config.Load()
 		users, _ := dubbo.UserProviderClient.USERS(context.TODO())
-		//userL, _ := dubbo.UserProviderClient.UserList(context.TODO())
+
 		user, _ := dubbo.UserProviderClient.Test(context.TODO(), 1)
 		u, _ := dubbo.UserClient.STRING(context.TODO(), 1)
 		//k, _ := dubbo.UserSerC.S(context.TODO(),1)

@@ -11,9 +11,10 @@ var (
 )
 
 type UserService struct {
-	Test     func(ctx context.Context, id int32) (User, error)
-	USERS    func(ctx context.Context) (Users, error)
-	UserList func(ctx context.Context) (User, error)
+	Test      func(ctx context.Context, id int32) (User, error)
+	USERS     func(ctx context.Context) (Users, error)
+	USER_LIST func(ctx context.Context) (interface{}, error)
+	Us        func(ctx context.Context, user User) (int32, error)
 }
 
 func init() {
