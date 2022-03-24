@@ -14,3 +14,6 @@ dubbo:
       UserSer:
         protocol: dubbo
         interface: com.shy.provider.service.UserSer
+      IDayService:
+        protocol: dubbo
+        interface: com.shy.provider.service.IDayService
